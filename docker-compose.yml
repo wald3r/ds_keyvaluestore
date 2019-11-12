@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_CREATE_TOPICS: test-topic:1:1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 9092:9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  # webapp:
+  #   build: .
+  #   depends_on:
+  #     - kafka
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     KAFKA: kafka:9092
+  #     KAFKA_TOPIC: test-topic
+  #     DEBUG: 1
