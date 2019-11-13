@@ -6,7 +6,8 @@ const kafka = new Kafka({
 })
  
 const producer = kafka.producer()
-const consumer = kafka.consumer({ groupId: Math.random().toString(36).substring(7) })
+const group = Math.random().toString(36).substring(7)
+const consumer = kafka.consumer({ groupId: group })
  
 const run = async () => {
   // Producing
@@ -31,6 +32,12 @@ const run = async () => {
 run().catch(console.error)
 
 async function process(msg) {
+  // console.log(msg)
+  msg = JSON.parse(msg)
+
+  if (msg.group == group)
+    return
+    
   if (msg.type == 'create')
     processCreate(msg.pair)
   else if (msg.type == 'update')
@@ -41,16 +48,32 @@ async function process(msg) {
 }
 
 async function processRemove(pair) {
+  const Pair = require('../models/pair')
+
+  console.log('remove ' + pair.key)
+  const o = await Pair.findOne({key: pair.key})
+
   // TODO find by key
-    await Pair.findByIdAndRemove(request.params.id)
+    await Pair.findByIdAndRemove(o._id)
 }
 
 async function processUpdate(pair) {
+  const Pair = require('../models/pair')
+
+  console.log('update ' + pair.key)
+  const o = await Pair.findOne({key: pair.key})
+
+  // const o = await Pair.findById(request.params.id)
+
   // TODO find by pair
-    const updatedPair = await Pair.findByIdAndUpdate(request.params.id, pair, {new: true})
+    const updatedPair = await Pair.findByIdAndUpdate(o._id, pair, {new: true})
 }
 
 async function processCreate(pair) { 
+  const Pair = require('../models/pair')
+
+  console.log('create ' + pair.key)
+
     pair = new Pair(pair)
     
     await pair.save()
@@ -60,6 +83,7 @@ async function processCreate(pair) {
 async function send(data) {
   console.log('--------------')
   console.log(JSON.stringify(data))
+  data.group = group
 
   a = await producer.send({
     topic: 'pairs-topic',
