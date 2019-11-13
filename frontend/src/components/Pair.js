@@ -21,7 +21,7 @@ const Pair = ( { pair, list, handlelist } ) => {
   return (
     <tr >
     <td> <Link to={`/${pair.key}`}>{pair.key}</Link></td>
-    {pair.values.map(item => <td key={item.id}>{item.value}</td>)}
+    {pair.values.map(item => <td key={item._id}>{item.value}</td>)}
     <td><Button onClick={handleRemoval}>Remove</Button></td>
   </tr>
   )

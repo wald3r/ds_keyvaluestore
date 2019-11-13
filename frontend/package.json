@@ -10,6 +10,7 @@
     "react-scripts": "0.9.5",
     "uniqid": "^5.1.0"
   },
+  "proxy": "http://localhost:3003",
   "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",

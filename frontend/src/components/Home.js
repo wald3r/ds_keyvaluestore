@@ -3,7 +3,6 @@ import { Button, Form, Table } from 'react-bootstrap'
 import pairsService from '../services/pair'
 import '../general.css'
 import Pair from '../components/Pair'
-var uniqid = require('uniqid')
 
 //Main component, which is accessible via '/'
 const Home = ({ kvlist, handlelist, ...props}) => {
@@ -30,7 +29,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
 
     for(let a = 0; a < list.length; a++){
       if(list[a].key === key){
-        list[a].values.push({'id': uniqid(), 'value': value})
+        list[a].values.push({ 'value': value })
         pair = list[a]
       }
     }
@@ -46,7 +45,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
       const response = await pairsService.updatePair(pair)
       handlelist(kvlist.concat(response))
     }else{
-      const response = await pairsService.savePair({'id': uniqid(), 'key': key, 'values': [{'id': uniqid(), 'value': value}]})
+      const response = await pairsService.savePair({ 'key': key, 'values': [{ 'value': value}]})
       handlelist(kvlist.concat(response))
     }
     setKey('')
@@ -110,7 +109,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
             <thead className='thead-light'>
               <tr>
                 <th>Key</th>
-                <th>Value</th>
+                <th>Values</th>
               </tr>
             </thead>
             <tbody>

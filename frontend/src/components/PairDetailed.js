@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import '../general.css'
 import { Table, Form, Button } from 'react-bootstrap'
 import pairService from '../services/pair'
-var uniqid = require('uniqid')
 
 
 //Component to edit a single kv pair
@@ -31,7 +30,7 @@ const PairDetailed = ( { pair, ...props } ) => {
     event.preventDefault()
     var newValues = pair[0].values.filter(item => item.value !== data.value)
     if(event.target.value !== ''){
-      setNewValues(newValues.concat({'id': uniqid(), 'value': event.target.value}))
+      setNewValues(newValues.concat({ 'value': event.target.value }))
     }
     else{
       setNewValues(newValues)
@@ -68,7 +67,7 @@ const PairDetailed = ( { pair, ...props } ) => {
             <tbody>
             <tr >
                 <td width="10"><input onChange={handleKeyChange} defaultValue={pair[0].key}/></td>
-                {pair[0].values.map(item => <td width="10" key={item.id}><input onChange={( event ) => handleValueChange(event, item)} defaultValue={item.value}/></td>)}
+                {pair[0].values.map(item => <td width="10" key={item._id}><input onChange={( event ) => handleValueChange(event, item)} defaultValue={item.value}/></td>)}
                 <td width="10"><Button type='submit'>Save</Button></td>
             </tr>
             </tbody>
