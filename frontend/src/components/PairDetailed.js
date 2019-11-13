@@ -66,7 +66,7 @@ const PairDetailed = ( { pair, ...props } ) => {
             </thead>
             <tbody>
             <tr >
-                <td width="10"><input onChange={handleKeyChange} defaultValue={pair[0].key}/></td>
+                <td width="10"><input onChange={handleKeyChange} defaultValue={pair[0].key} disabled /></td>
                 {pair[0].values.map(item => <td width="10" key={item._id}><input onChange={( event ) => handleValueChange(event, item)} defaultValue={item.value}/></td>)}
                 <td width="10"><Button type='submit'>Save</Button></td>
             </tr>
