@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import '../general.css'
 import { Table, Form, Button } from 'react-bootstrap'
 import pairService from '../services/pair'
+var uniqid = require('uniqid')
+
 
 const PairDetailed = ( { pair, ...props } ) => {
 
@@ -16,7 +18,6 @@ const PairDetailed = ( { pair, ...props } ) => {
 
   const handleKeyChange = (event) => {
     event.preventDefault()
-    console.log(event.target.value)
     setNewKey(event.target.value)
     if(newValues.length === 0){
       setNewValues(pair[0].values)
@@ -26,12 +27,12 @@ const PairDetailed = ( { pair, ...props } ) => {
 
   const handleValueChange = (event, data) => {
     event.preventDefault()
-
-    console.log(data.value)
-    console.log(event.target.value)
     var newValues = pair[0].values.filter(item => item.value !== data.value)
-    newValues.concat(event.target.value)
-    setNewValues(newValues)
+    setNewValues(newValues.concat({'id': uniqid(), 'value': event.target.value}))
+  
+    if(newKey === ''){
+      setNewKey(pair[0].key)
+    }
 
   }
 

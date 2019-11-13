@@ -42,7 +42,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
       const response = await pairsService.updatePair(pair)
       handlelist(kvlist.concat(response))
     }else{
-      const response = await pairsService.savePair({'key': key, 'values': [{'id': uniqid(), 'value': value}]})
+      const response = await pairsService.savePair({'id': uniqid(), 'key': key, 'values': [{'id': uniqid(), 'value': value}]})
       handlelist(kvlist.concat(response))
     }
     setKey('')
