@@ -58,13 +58,16 @@ async function processCreate(pair) {
 
 
 async function send(data) {
-  await producer.send({
+  console.log('--------------')
+  console.log(JSON.stringify(data))
+
+  a = await producer.send({
     topic: 'pairs-topic',
     messages: [
-      { value: data },
+      { value: JSON.stringify(data) },
     ],
   })
-
+  console.log(a)
 }
 
 module.exports = { send }

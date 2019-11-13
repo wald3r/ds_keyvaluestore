@@ -1,23 +1,35 @@
 const pairsRouter = require('express').Router()
 const Pair = require('../models/pair')
+const kafkaThing = require('../utils/kafkaThing')
 
 
 pairsRouter.get('/', async (request, response) => {
-  try{
+  try {
 
     const pairs = await Pair.find({})
     return response.json(pairs)
-  } catch(exception){
+  } catch (exception) {
     next(exception)
   }
 })
 
 pairsRouter.delete('/:id', async (request, response, next) => {
-  
-  try{
+
+  try {
+
+    const pair = await Pair.findById(request.params.id)
+console.log(pair)
+    kafkaThing.send({
+      type: 'remove',
+      pair: {
+        key: pair.key,
+      }
+    })
+
     await Pair.findByIdAndRemove(request.params.id)
+
     return response.status(204).end()
-  } catch(exception){
+  } catch (exception) {
     next(exception)
   }
 })
@@ -30,28 +42,40 @@ pairsRouter.put('/:id', async (request, response, next) => {
     key: body.key,
     values: body.values,
   }
-  try{
-    const updatedPair = await Pair.findByIdAndUpdate(request.params.id, newPair, {new: true})
+
+  await kafkaThing.send({
+    type: 'update',
+    pair: newPair
+  })
+
+  try {
+    const updatedPair = await Pair.findByIdAndUpdate(request.params.id, newPair, { new: true })
     return response.status(201).json(updatedPair)
-  } catch(exception){
+  } catch (exception) {
     next(exception)
   }
 })
 
 
-pairsRouter.post('/', async (request, response, next) =>{ 
-  try{
+pairsRouter.post('/', async (request, response, next) => {
+  console.log('lkjlkjlk')
+  try {
     const body = request.body
     console.log(body.values)
     pair = new Pair({
       key: body.key,
       values: body.values
     })
-    
+
+    kafkaThing.send({
+      type: 'create',
+      pair: body
+    })
+
     await pair.save()
-     
+
     response.status(201).json(pair.toJSON())
-  }catch(exception){
+  } catch (exception) {
     next(exception)
   }
 })

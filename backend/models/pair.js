@@ -20,34 +20,37 @@ pairSchema.set('toJSON', {
 })
 
 
-pairSchema.post('findByIdAndUpdate', function(doc) {
-  kafkaThing.send({
-    type: 'update',
-    pair: {
-      key: doc.key,
-      value: doc.value
-    }
-  })
-})
+// pairSchema.post('findByIdAndUpdate', function(doc) {
+//   console.log('update')
 
-pairSchema.post('save', function(doc) {
-  kafkaThing.send({
-    type: 'create',
-    pair: {
-      key: doc.key,
-      value: doc.value
-    }
-  })
-});
+//   kafkaThing.send({
+//     type: 'update',
+//     pair: {
+//       key: doc.key,
+//       value: doc.value
+//     }
+//   })
+// })
 
-pairSchema.post('remove', function(doc) {
-  kafkaThing.send({
-    type: 'remove',
-    pair: {
-      key: doc.key,
-      value: doc.value
-    }
-  })
-});
+// pairSchema.post('save', function(doc) {
+//   console.log('saving')
+//   kafkaThing.send({
+//     type: 'create',
+//     pair: {
+//       key: doc.key,
+//       value: doc.value
+//     }
+//   })
+// });
+
+// pairSchema.post('remove', function(doc) {
+//   kafkaThing.send({
+//     type: 'remove',
+//     pair: {
+//       key: doc.key,
+//       value: doc.value
+//     }
+//   })
+// });
 
 module.exports = mongoose.model('Pair', pairSchema)
