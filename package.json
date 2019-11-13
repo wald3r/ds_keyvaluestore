@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^6.0.3",
     "kafkajs": "^1.11.0"
   }
 }
