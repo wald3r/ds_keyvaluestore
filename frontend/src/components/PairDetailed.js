@@ -18,6 +18,10 @@ const PairDetailed = ( { pair, ...props } ) => {
     event.preventDefault()
     console.log(event.target.value)
     setNewKey(event.target.value)
+    if(newValues.length === 0){
+      setNewValues(pair[0].values)
+    }
+    
   }
 
   const handleValueChange = (event, data) => {
@@ -34,6 +38,7 @@ const PairDetailed = ( { pair, ...props } ) => {
   const handleNewPair = async (event) => {
     event.preventDefault()
     await pairService.updatePair({'id': pair[0].id, 'key': newKey, 'values': newValues})
+    window.location.href = '/'
     console.log('Save pair')
   }
 
