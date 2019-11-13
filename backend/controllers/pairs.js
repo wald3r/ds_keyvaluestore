@@ -18,7 +18,7 @@ pairsRouter.delete('/:id', async (request, response, next) => {
   try {
 
     const pair = await Pair.findById(request.params.id)
-console.log(pair)
+    console.log(pair)
     kafkaThing.send({
       type: 'remove',
       pair: {
@@ -58,7 +58,6 @@ pairsRouter.put('/:id', async (request, response, next) => {
 
 
 pairsRouter.post('/', async (request, response, next) => {
-  console.log('lkjlkjlk')
   try {
     const body = request.body
     console.log(body.values)

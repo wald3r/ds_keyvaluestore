@@ -43,6 +43,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
     const pair = addToExistingKey()
     if(pair !== null){
       const response = await pairsService.updatePair(pair)
+      console.log(response)
       handlelist(kvlist.concat(response))
     }else{
       const response = await pairsService.savePair({ 'key': key, 'values': [{ 'value': value}]})
@@ -62,6 +63,14 @@ const Home = ({ kvlist, handlelist, ...props}) => {
   const handleValueInput = (event) => {
     event.preventDefault()
     setValue(event.target.value)
+  }
+  
+
+  const handleRemoveAll = async () => {
+    for(let i = 0; i < kvlist.length; i++){
+      await pairsService.removePair(kvlist[i])
+    }
+    window.location.reload()
   }
 
   return (
@@ -97,6 +106,8 @@ const Home = ({ kvlist, handlelist, ...props}) => {
               </Table>
               <Button className='button' type="submit">Add Value</Button>
             </Form>
+            <br></br>
+            <Button className='button' onClick={handleRemoveAll}>Clear Database</Button>
           </div>
         </div>
       </div>
