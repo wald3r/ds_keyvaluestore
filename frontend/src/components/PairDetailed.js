@@ -5,6 +5,7 @@ import pairService from '../services/pair'
 var uniqid = require('uniqid')
 
 
+//Component to edit a single kv pair
 const PairDetailed = ( { pair, ...props } ) => {
 
   const [newKey, setNewKey] = useState("")
@@ -15,7 +16,7 @@ const PairDetailed = ( { pair, ...props } ) => {
     return null
   }
 
-
+  //Event handler to edit a key
   const handleKeyChange = (event) => {
     event.preventDefault()
     setNewKey(event.target.value)
@@ -25,10 +26,16 @@ const PairDetailed = ( { pair, ...props } ) => {
     
   }
 
+  //Event handler to edit values
   const handleValueChange = (event, data) => {
     event.preventDefault()
     var newValues = pair[0].values.filter(item => item.value !== data.value)
-    setNewValues(newValues.concat({'id': uniqid(), 'value': event.target.value}))
+    if(event.target.value !== ''){
+      setNewValues(newValues.concat({'id': uniqid(), 'value': event.target.value}))
+    }
+    else{
+      setNewValues(newValues)
+    }
   
     if(newKey === ''){
       setNewKey(pair[0].key)
@@ -36,6 +43,7 @@ const PairDetailed = ( { pair, ...props } ) => {
 
   }
 
+  //Update an edited kv pair
   const handleNewPair = async (event) => {
     event.preventDefault()
     await pairService.updatePair({'id': pair[0].id, 'key': newKey, 'values': newValues})

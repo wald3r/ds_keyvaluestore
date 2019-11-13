@@ -5,21 +5,24 @@ import '../general.css'
 import Pair from '../components/Pair'
 var uniqid = require('uniqid')
 
-
+//Main component, which is accessible via '/'
 const Home = ({ kvlist, handlelist, ...props}) => {
 
   const [key, setKey] = useState("")
   const [value, setValue] = useState("")
 
+  //Fetch kv pairs from database
   const getPairs = async () => {
     const list =  await pairsService.getAllPairs()
     handlelist(list)
   }
 
+  //react hook to fetch data
   useEffect(() => {
     getPairs()
   }, [])
 
+  //If key already exists, then return kv pair
   const addToExistingKey =  () => {
     
     var list = kvlist
@@ -35,6 +38,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
 
   }
 
+  //Add new kv pair or add values to existing pair
   const handleValue = async (event) => {
     console.log('adding k v pair', key, value)
     const pair = addToExistingKey()
@@ -49,11 +53,13 @@ const Home = ({ kvlist, handlelist, ...props}) => {
     setValue('')
   }
 
+  //Event handler for key input tag
   const handleKeyInpupt = (event) => {
     event.preventDefault()
     setKey(event.target.value)
   }
 
+  //Event handler for value input tag
   const handleValueInput = (event) => {
     event.preventDefault()
     setValue(event.target.value)

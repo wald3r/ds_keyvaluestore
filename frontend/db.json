@@ -1,18 +1,9 @@
 {
   "pairs": [
     {
-      "id": "k2wzdlhv",
+      "id": "k2wzwpsy",
       "key": "test",
-      "values": [
-        {
-          "id": "k2wzdnak",
-          "value": "test12"
-        },
-        {
-          "id": "k2wzdwks",
-          "value": "aaaan"
-        }
-      ]
+      "values": []
     }
   ]
 }

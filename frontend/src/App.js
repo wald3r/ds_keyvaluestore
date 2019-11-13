@@ -3,11 +3,14 @@ import Home from './components/Home'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import PairDetailed from './components/PairDetailed'
 
+//Component which takes care of routing
 const App = () => {
 
 
   const [kvlist, setKvlist] = useState([])
 
+
+  // Finds a key-value pair via a given id
   const findPairById = (id) => kvlist.filter(item => item.key === id)
   
    return (

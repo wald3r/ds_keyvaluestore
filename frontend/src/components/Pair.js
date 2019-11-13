@@ -3,9 +3,11 @@ import { Button } from 'react-bootstrap'
 import pairService from '../services/pair'
 import { Link } from 'react-router-dom'
 
+
+//Component to display a single kv pair
 const Pair = ( { pair, list, handlelist } ) => {
 
-
+  //Remove a whole kv pair
   const handleRemoval = async () => {
     const result = window.confirm(`Do you really want to delete all items with key ${pair.key}?`)
     if(result){
