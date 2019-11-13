@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon index.js"
+    "watch1": "cross-env NODE_ENV=production1 nodemon index.js",
+    "watch2": "cross-env NODE_ENV=production2 nodemon index.js"
   },
   "author": "Daniel Walder",
   "license": "ISC",
