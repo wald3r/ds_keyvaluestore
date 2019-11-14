@@ -1,8 +1,8 @@
 const { Kafka } = require('kafkajs')
- 
+
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: ['localhost:9092']
+  brokers: [ process.env.KAFKA ]
 })
  
 const producer = kafka.producer()
@@ -19,7 +19,7 @@ const run = async () => {
  
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-      process(message.value)
+      handle(message.value)
       // console.log({
       //   partition,
       //   offset: message.offset,
@@ -31,7 +31,7 @@ const run = async () => {
  
 run().catch(console.error)
 
-async function process(msg) {
+async function handle(msg) {
   // console.log(msg)
   msg = JSON.parse(msg)
 
@@ -39,15 +39,15 @@ async function process(msg) {
     return
     
   if (msg.type == 'create')
-    processCreate(msg.pair)
+    handleCreate(msg.pair)
   else if (msg.type == 'update')
-    processUpdate(msg.pair)
+    handleUpdate(msg.pair)
   else if (msg.type == 'remove')
-    processRemove(msg.pair)
+    handleRemove(msg.pair)
 
 }
 
-async function processRemove(pair) {
+async function handleRemove(pair) {
   const Pair = require('../models/pair')
 
   console.log('remove ' + pair.key)
@@ -57,7 +57,7 @@ async function processRemove(pair) {
     await Pair.findByIdAndRemove(o._id)
 }
 
-async function processUpdate(pair) {
+async function handleUpdate(pair) {
   const Pair = require('../models/pair')
 
   console.log('update ' + pair.key)
@@ -69,7 +69,7 @@ async function processUpdate(pair) {
     const updatedPair = await Pair.findByIdAndUpdate(o._id, pair, {new: true})
 }
 
-async function processCreate(pair) { 
+async function handleCreate(pair) { 
   const Pair = require('../models/pair')
 
   console.log('create ' + pair.key)
