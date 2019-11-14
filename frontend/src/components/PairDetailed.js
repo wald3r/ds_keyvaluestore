@@ -62,13 +62,15 @@ const PairDetailed = ( { pair, ...props } ) => {
               <tr>
                 <th>Key</th>
                 <th>Values</th>
+                <th>Created</th>
               </tr>
             </thead>
             <tbody>
             <tr >
-                <td width="10"><input onChange={handleKeyChange} defaultValue={pair[0].key} disabled /></td>
-                {pair[0].values.map(item => <td width="10" key={item._id}><input onChange={( event ) => handleValueChange(event, item)} defaultValue={item.value}/></td>)}
-                <td width="10"><Button type='submit'>Save</Button></td>
+                <td ><input onChange={handleKeyChange} defaultValue={pair[0].key} disabled /></td>
+                {pair[0].values.map(item => <td key={item._id}><input className='inputEdit' width='700px' onChange={( event ) => handleValueChange(event, item)} defaultValue={item.value}/></td>)}
+                <td ><input defaultValue={pair[0].createdAt} disabled /></td>
+                <td ><Button type='submit'>Save</Button></td>
             </tr>
             </tbody>
           </Table>

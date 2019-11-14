@@ -8,10 +8,34 @@
 }
 
 .table{
-  display: table-cell;
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: collapse;
+  
   width: 100%;
 }
 
+.cell-breakWord {
+  word-wrap: break-word;
+  max-width: 700px;
+}
+
+.inputForm{
+  margin: 0 auto; 
+  width:500px;
+}
+
+.input{
+  width: 100%;
+  padding: 10px;
+  margin: 0px;
+}
+
+.inputEdit{
+  width: 700px;
+  padding: 10px;
+  margin: 0px;
+}
 .button {
   display: table-cell;
   width: 100%;

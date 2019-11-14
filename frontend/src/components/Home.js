@@ -3,6 +3,7 @@ import { Button, Form, Table } from 'react-bootstrap'
 import pairsService from '../services/pair'
 import '../general.css'
 import Pair from '../components/Pair'
+import helperClass from '../utils/helper'
 
 //Main component, which is accessible via '/'
 const Home = ({ kvlist, handlelist, ...props}) => {
@@ -53,6 +54,8 @@ const Home = ({ kvlist, handlelist, ...props}) => {
     setValue('')
   }
 
+
+
   //Event handler for key input tag
   const handleKeyInpupt = (event) => {
     event.preventDefault()
@@ -65,41 +68,100 @@ const Home = ({ kvlist, handlelist, ...props}) => {
     setValue(event.target.value)
   }
   
-
+  //clear whole database
   const handleRemoveAll = async () => {
-    for(let i = 0; i < kvlist.length; i++){
-      await pairsService.removePair(kvlist[i])
+    const result = window.confirm(`Do you really want to clear the whole database?`)
+    if(result){
+      for(let i = 0; i < kvlist.length; i++){
+        await pairsService.removePair(kvlist[i])
+      }
+      handlelist([])
+      window.location.reload()
     }
+  }
+
+  //create 50 Entries with a random payload
+  const handle50Entries = async () => {
+
+    let list = []
+    for(let i = 0; i < 50; i++){
+      const randomLength = Math.floor(Math.random() * 512);
+      const randomPayload = helperClass.makePayload(randomLength)
+      await pairsService.savePair({ 'key': i, 'values': [{ 'value': randomPayload}]})
+      list.concat({ 'key': i, 'values': [{ 'value': randomPayload}]})
+    }
+    handlelist(kvlist.concat(list))
     window.location.reload()
   }
+
+  //create 25 Entries with a minimum payload of 10 bytes
+  const handle25Min = async () => {
+
+    let list = []
+    for(let i = 50; i < 75; i++){
+      const randomPayload = helperClass.makePayload(10)
+      await pairsService.savePair({ 'key': i, 'values': [{ 'value': randomPayload}]})
+      list.concat({ 'key': i, 'values': [{ 'value': randomPayload}]})
+    }
+    handlelist(kvlist.concat(list))
+    window.location.reload()
+  }
+
+  //create 25 Entries with a average payload of 256 bytes
+  const handle25Avg = async () => {
+
+    let list = []
+    for(let i = 75; i < 100; i++){
+      const randomPayload = helperClass.makePayload(256)
+      await pairsService.savePair({ 'key': i, 'values': [{ 'value': randomPayload}]})
+      list.concat({ 'key': i, 'values': [{ 'value': randomPayload}]})
+    }
+    handlelist(kvlist.concat(list))
+    window.location.reload()
+  }
+
+   //create 25 Entries with a maximum payload of 512 bytes
+   const handle25Max = async () => {
+
+    let list = []
+    for(let i = 100; i < 125; i++){
+      const randomPayload = helperClass.makePayload(512)
+      await pairsService.savePair({ 'key': i, 'values': [{ 'value': randomPayload}]})
+      list.concat({ 'key': i, 'values': [{ 'value': randomPayload}]})
+    }
+    handlelist(kvlist.concat(list))
+    window.location.reload()
+  }
+
+ 
 
   return (
     <div>
       <div className='container'>
         <div className='row'>
           <div className='col-md-15'>
-            <Form onSubmit={handleValue}>
-              <Table className='table .table-striped' width="10">
+            <Form className='inputForm' onSubmit={handleValue}>
+              <Table className='table .table-striped' >
                   <thead className='thead-light'>
 
                   </thead>
-                  <tbody width="10">
+                  <tbody >
                       <tr>
-                          <td width="10">
+                          <td width='100px'>
                               Key:
                           </td>
 
-                          <td>
-                            <input autoComplete='off' onChange={handleKeyInpupt}/>
+                          <td width='700px'>
+                            <input className='input' autoComplete='off' onChange={handleKeyInpupt}/>
                           </td>
                       </tr>
                       <tr>
-                          <td width="10">
-                              Values:
+                          <td width='100px'>
+                              Value:
                           </td>
 
-                          <td>
-                            <input autoComplete='off' onChange={handleValueInput}/>
+                          <td width='700px'>
+                            <input className='input' autoComplete='off' onChange={handleValueInput}/>
                           </td>
                       </tr>
                   </tbody>
@@ -108,19 +170,18 @@ const Home = ({ kvlist, handlelist, ...props}) => {
             </Form>
             <br></br>
             <Button className='button' onClick={handleRemoveAll}>Clear Database</Button>
-          </div>
-        </div>
-      </div>
-      <br></br>
-      <br></br>
-      <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
+            <Button className='button' onClick={handle50Entries}>Create 50 Random Entries</Button>
+            <Button className='button' onClick={handle25Min}>Create 25 Entries Min Payload</Button>
+            <Button className='button' onClick={handle25Avg}>Create 25 Entries Average Payload</Button>
+            <Button className='button' onClick={handle25Max}>Create 25 Entries Max Payload</Button>
+          <br></br>
+          <br></br>
           <Table className='table'>
             <thead className='thead-light'>
               <tr>
                 <th>Key</th>
                 <th>Values</th>
+                <th>Created</th>
               </tr>
             </thead>
             <tbody>

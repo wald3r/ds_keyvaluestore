@@ -7,8 +7,7 @@ const pairSchema = mongoose.Schema({
     {
       value: String
     }
-  ]
-})
+  ]})
 
 pairSchema.plugin(timestamps)
 
