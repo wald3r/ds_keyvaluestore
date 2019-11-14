@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 import pairService from '../services/pair'
 import { Link } from 'react-router-dom'
 import '../general.css'
-
+import helperClass from '../utils/helper'
 
 //Component to display a single kv pair
 const Pair = ( { pair, list, handlelist } ) => {
@@ -23,8 +23,8 @@ const Pair = ( { pair, list, handlelist } ) => {
   return (
     <tr >
     <td> <Link to={`/${pair.key}`}>{pair.key}</Link></td>
+    <td >{helperClass.formatTime(pair.createdAt)}</td>
     {pair.values.map(item => <td className='cell-breakWord' key={item._id}>{item.value}</td>)}
-    <td >{pair.createdAt}</td>
     <td ><Button onClick={handleRemoval}>Remove</Button></td>
   </tr>
   )

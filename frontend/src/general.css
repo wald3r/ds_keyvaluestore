@@ -11,9 +11,24 @@
   margin: 0 auto;
   text-align: center;
   border-collapse: collapse;
-  
   width: 100%;
 }
+
+.tablelist{
+  text-align: center;
+  border-collapse: collapse;
+  position: absolute;
+  display: table-cell; 
+  width: 100%;
+}
+
+.tablelistedit{
+  margin-left:15%;
+  text-align: center;
+  width: 100%;
+}
+
+
 
 .cell-breakWord {
   word-wrap: break-word;
@@ -32,7 +47,7 @@
 }
 
 .inputEdit{
-  width: 700px;
+  width: 400px;
   padding: 10px;
   margin: 0px;
 }

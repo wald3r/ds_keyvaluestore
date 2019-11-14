@@ -2,27 +2,16 @@ import React, { useState } from 'react'
 import '../general.css'
 import { Table, Form, Button } from 'react-bootstrap'
 import pairService from '../services/pair'
-
+import helperClass from '../utils/helper'
 
 //Component to edit a single kv pair
 const PairDetailed = ( { pair, ...props } ) => {
 
-  const [newKey, setNewKey] = useState("")
   const [newValues, setNewValues] = useState([])
 
 
   if(pair[0] === undefined){
     return null
-  }
-
-  //Event handler to edit a key
-  const handleKeyChange = (event) => {
-    event.preventDefault()
-    setNewKey(event.target.value)
-    if(newValues.length === 0){
-      setNewValues(pair[0].values)
-    }
-    
   }
 
   //Event handler to edit values
@@ -35,17 +24,13 @@ const PairDetailed = ( { pair, ...props } ) => {
     else{
       setNewValues(newValues)
     }
-  
-    if(newKey === ''){
-      setNewKey(pair[0].key)
-    }
 
   }
 
   //Update an edited kv pair
   const handleNewPair = async (event) => {
     event.preventDefault()
-    await pairService.updatePair({'id': pair[0].id, 'key': newKey, 'values': newValues})
+    await pairService.updatePair({'id': pair[0].id, 'key': pair[0].key, 'values': newValues})
     window.location.href = '/'
     console.log('Save pair')
   }
@@ -53,23 +38,23 @@ const PairDetailed = ( { pair, ...props } ) => {
   return (
     <div className='container'>
     <div className='row'>
-      <div className='col-md-15'>
+      <div className='col-md-40'>
         <br></br>
         <br></br>
-        <Form onSubmit={handleNewPair}>
-          <Table className='table'>
+        <Form className='editForm' onSubmit={handleNewPair}>
+          <Table className='tablelistedit'>
             <thead className='thead-light'>
               <tr>
                 <th>Key</th>
-                <th>Values</th>
                 <th>Created</th>
+                <th>Values</th>
               </tr>
             </thead>
             <tbody>
             <tr >
-                <td ><input onChange={handleKeyChange} defaultValue={pair[0].key} disabled /></td>
+                <td >{pair[0].key}</td>
+                <td >{helperClass.formatTime(pair[0].createdAt)}</td>
                 {pair[0].values.map(item => <td key={item._id}><input className='inputEdit' width='700px' onChange={( event ) => handleValueChange(event, item)} defaultValue={item.value}/></td>)}
-                <td ><input defaultValue={pair[0].createdAt} disabled /></td>
                 <td ><Button type='submit'>Save</Button></td>
             </tr>
             </tbody>

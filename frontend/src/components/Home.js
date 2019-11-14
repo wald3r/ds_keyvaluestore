@@ -23,7 +23,7 @@ const Home = ({ kvlist, handlelist, ...props}) => {
   }, [])
 
   //If key already exists, then return kv pair
-  const addToExistingKey =  () => {
+  const addToExistingKey =  (localkey) => {
     
     var list = kvlist
     var pair = null
@@ -133,6 +133,8 @@ const Home = ({ kvlist, handlelist, ...props}) => {
     window.location.reload()
   }
 
+
+
  
 
   return (
@@ -176,12 +178,12 @@ const Home = ({ kvlist, handlelist, ...props}) => {
             <Button className='button' onClick={handle25Max}>Create 25 Entries Max Payload</Button>
           <br></br>
           <br></br>
-          <Table className='table'>
+          <Table className='tablelist'>
             <thead className='thead-light'>
               <tr>
                 <th>Key</th>
-                <th>Values</th>
                 <th>Created</th>
+                <th>Values</th>
               </tr>
             </thead>
             <tbody>

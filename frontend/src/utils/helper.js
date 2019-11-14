@@ -8,4 +8,14 @@ function makePayload(length) {
   return result;
 }
 
-export default { makePayload } 
+
+function formatTime(timestamp){
+
+
+  var dateobject = new Date(timestamp)
+  var datestring = `${dateobject.getFullYear()}-${dateobject.getMonth()}-${dateobject.getDay()} ${dateobject.getHours()}:${dateobject.getMinutes()}:${dateobject.getSeconds()}:${dateobject.getMilliseconds()}`
+  return datestring
+}
+
+
+export default { makePayload, formatTime } 
