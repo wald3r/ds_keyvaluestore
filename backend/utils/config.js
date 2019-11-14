@@ -7,7 +7,7 @@ if(process.env.NODE_ENV === 'production1'){
     DB_URI = process.env.PRO1_MONGODB_URI
 
 }else{
-    PORT = process.env.PRO2_PORT
+    PORT = process.env.PRO1_PORT
     DB_URI = process.env.PRO2_MONGODB_URI
 
 }
