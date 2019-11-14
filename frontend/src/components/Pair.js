@@ -19,7 +19,7 @@ const Pair = ( { pair, list, handlelist } ) => {
     }
   }
 
-  console.log(new Date(pair.createdAt).getHours())
+
   return (
     <tr >
     <td> <Link to={`/${pair.key}`}>{pair.key}</Link></td>

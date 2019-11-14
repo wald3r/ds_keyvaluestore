@@ -43,7 +43,7 @@ pairsRouter.put('/:id', async (request, response, next) => {
     values: body.values,
   }
 
-  await kafkaThing.send({
+  kafkaThing.send({
     type: 'update',
     pair: newPair
   })
