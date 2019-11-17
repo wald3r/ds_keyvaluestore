@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+  backend:
+    build: ./backend1
+    depends_on:
+      - mongo
+    ports:
+      - 3003:3003
+    links:
+      - mongo
+    environment:
+      PRO1_MONGODB_URI: "mongodb://root:example@mongo:27017/admin"
+      SECRET: "keyvalue"
+      PRO1_PORT: 3003
+      KAFKA: '192.168.1.50:9092'
+  frontend:
+    build: ./frontend1
+    ports: 
+      - 3000:3000

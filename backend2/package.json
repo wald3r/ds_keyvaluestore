@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend for a key-value-store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch1": "cross-env NODE_ENV=production1 nodemon index.js",
+    "watch2": "cross-env NODE_ENV=production2 nodemon index.js"
+  },
+  "author": "Daniel Walder",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cross-env": "^6.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "kafkajs": "^1.11.0",
+    "mongoose": "^5.7.10",
+    "mongoose-timestamp": "^0.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
