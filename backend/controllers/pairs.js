@@ -2,7 +2,7 @@ const pairsRouter = require('express').Router()
 const Pair = require('../models/pair')
 const kafkaThing = require('../utils/kafkaThing')
 
-
+//Fetch all data from the database and send it to the frontend
 pairsRouter.get('/', async (request, response) => {
   try {
 
@@ -13,6 +13,7 @@ pairsRouter.get('/', async (request, response) => {
   }
 })
 
+//delete a kv pair with the given id
 pairsRouter.delete('/:id', async (request, response, next) => {
 
   try {
@@ -34,6 +35,7 @@ pairsRouter.delete('/:id', async (request, response, next) => {
   }
 })
 
+//update a kv pair with the given id
 pairsRouter.put('/:id', async (request, response, next) => {
 
   const body = request.body
@@ -56,7 +58,7 @@ pairsRouter.put('/:id', async (request, response, next) => {
   }
 })
 
-
+//add a kv pair 
 pairsRouter.post('/', async (request, response, next) => {
   try {
     const body = request.body

@@ -1,3 +1,5 @@
+
+//create a random payload
 function makePayload(length) {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -9,11 +11,10 @@ function makePayload(length) {
 }
 
 
+//format the time to display it in a readable way
 function formatTime(timestamp){
-
-
   var dateobject = new Date(timestamp)
-  var datestring = `${dateobject.getFullYear()}-${dateobject.getMonth()}-${dateobject.getDay()} ${dateobject.getHours()}:${dateobject.getMinutes()}:${dateobject.getSeconds()}:${dateobject.getMilliseconds()}`
+  var datestring = `${dateobject.getFullYear()}-${dateobject.getMonth()}-${dateobject.getDay()} ${dateobject.getHours()}:${dateobject.getMinutes()}:${dateobject.getSeconds()}.${dateobject.getMilliseconds()}`
   return datestring
 }
 
