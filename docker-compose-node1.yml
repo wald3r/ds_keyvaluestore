@@ -20,7 +20,7 @@ services:
       PRO1_MONGODB_URI: "mongodb://root:example@mongo:27017/admin"
       SECRET: "keyvalue"
       PRO1_PORT: 3003
-      KAFKA: '192.168.1.50:9092'
+      KAFKA: 'http://localhost:9092'
   frontend:
     build: ./frontend1
     ports: 
