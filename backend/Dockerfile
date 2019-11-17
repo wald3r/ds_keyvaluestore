@@ -5,4 +5,4 @@ ADD . .
 
 RUN npm install
 
-CMD npm run watch1
+CMD sleep 10 && npm run watch1
