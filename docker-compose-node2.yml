@@ -22,7 +22,7 @@ services:
       PRO2_MONGODB_URI: "mongodb://root:example@mongo2:27017/admin"
       SECRET: "keyvalue"
       PRO2_PORT: 3004
-      KAFKA: 'localhost:9092'
+      KAFKA: 'ds_kafka:9092'
   frontend2:
     build: ./frontend2
     ports: 

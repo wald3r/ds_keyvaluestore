@@ -1,0 +1,74 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka
+    container_name: ds_kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ds_kafka
+      KAFKA_CREATE_TOPICS: pairs-topic:1:1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 9092:9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  mongo1:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    container_name: node_db_1
+  backend1:
+    build: ./backend1
+    depends_on:
+      - mongo1
+      - kafka
+    ports:
+      - 3003:3003
+    links:
+      - mongo1
+    container_name: node_backend_1
+    environment:
+      PRO1_MONGODB_URI: "mongodb://root:example@mongo1:27017/admin"
+      SECRET: "keyvalue"
+      PRO1_PORT: 3003
+      KAFKA: 'ds_kafka:9092'
+  frontend1:
+    build: ./frontend1
+    ports: 
+      - 3000:3000
+    container_name: node_frontend_1
+
+  mongo2:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    container_name: node_db_2
+  backend2:
+    build: ./backend2
+    depends_on:
+      - mongo2
+      - kafka
+    ports:
+      - 3004:3004
+    links:
+      - mongo2
+    container_name: node_backend_2
+    environment:
+      PRO2_MONGODB_URI: "mongodb://root:example@mongo2:27017/admin"
+      SECRET: "keyvalue"
+      PRO2_PORT: 3004
+      KAFKA: 'ds_kafka:9092'
+  frontend2:
+    build: ./frontend2
+    ports: 
+      - 3001:3000
+    container_name: node_frontend_2

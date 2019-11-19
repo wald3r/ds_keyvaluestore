@@ -7,11 +7,11 @@ services:
       - 2181:2181
   kafka:
     image: wurstmeister/kafka
-
+    container_name: ds_kafka
     depends_on:
       - zookeeper
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: ds_keyvaluestore_kafka_1
+      KAFKA_ADVERTISED_HOST_NAME: ds_kafka
       KAFKA_CREATE_TOPICS: pairs-topic:1:1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     ports:

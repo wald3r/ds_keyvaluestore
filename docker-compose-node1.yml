@@ -6,8 +6,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-#    ports:
-#      - "27017:27017"
     container_name: node_db_1
   backend1:
     build: ./backend1
@@ -22,7 +20,7 @@ services:
       PRO1_MONGODB_URI: "mongodb://root:example@mongo1:27017/admin"
       SECRET: "keyvalue"
       PRO1_PORT: 3003
-      KAFKA: 'localhost:9092'
+      KAFKA: 'ds_kafka:9092'
   frontend1:
     build: ./frontend1
     ports: 
