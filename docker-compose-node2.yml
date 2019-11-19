@@ -1,29 +1,29 @@
 version: "3"
 
 services:
-  mongo:
+  mongo2:
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27017:27017"
+#    ports:
+#      - "27017:27017"
     container_name: node_db_2
-  backend:
+  backend2:
     build: ./backend2
     depends_on:
-      - mongo
+      - mongo2
     ports:
       - 3004:3004
     links:
-      - mongo
+      - mongo2
     container_name: node_backend_2
     environment:
-      PRO1_MONGODB_URI: "mongodb://root:example@mongo:27017/admin"
+      PRO1_MONGODB_URI: "mongodb://root:example@mongo2:27017/admin"
       SECRET: "keyvalue"
       PRO1_PORT: 3004
       KAFKA: 'ds_keyvaluestore_kafka_1:9092'
-  frontend:
+  frontend2:
     build: ./frontend2
     ports: 
       - 3001:3001
