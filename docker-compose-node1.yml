@@ -8,6 +8,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"
+    container_name: node_db_1
   backend:
     build: ./backend1
     depends_on:
@@ -16,6 +17,7 @@ services:
       - 3003:3003
     links:
       - mongo
+    container_name: node_backend_1
     environment:
       PRO1_MONGODB_URI: "mongodb://root:example@mongo:27017/admin"
       SECRET: "keyvalue"
@@ -25,3 +27,4 @@ services:
     build: ./frontend1
     ports: 
       - 3000:3000
+    container_name: node_frontend_1
